@@ -22,4 +22,11 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
+  /**
+   * onClickLogin(): Método para el procedimiento de autenticación 
+   */
+  onClickLogin() {
+
+  }
+
 }
