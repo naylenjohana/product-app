@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { RegisterUserPage } from '../register-user/register-user';
 /**
  * Generated class for the LoginPage page.
  *
@@ -27,6 +27,17 @@ export class LoginPage {
    */
   onClickLogin() {
 
+  }
+
+  /**
+   * onClickRestore(): Método para el procedimiento de resstablecer contraseña
+   */
+  onClickRestore () {
+
+  }
+
+  onClickregister() {
+    this.navCtrl.push(RegisterUserPage);
   }
 
 }

@@ -15,7 +15,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 export class SqliteServiceProvider {
 
 
-  private database: SQLiteObject;
+  public database: SQLiteObject;
   private dbReady = new BehaviorSubject<boolean>(false);
 
   constructor(private platform: Platform, private sqlite: SQLite) {
@@ -39,32 +39,34 @@ export class SqliteServiceProvider {
 
 
   private createTables() {
-     return new Promise((resolve, reject) => {
 
-      this.database.executeSql(
-       `CREATE TABLE IF NOT EXISTS product (
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
-         name TEXT,
-         type TEXT,
-         quantity REAL,
-         price REAL,
-         latitude REAL,
-         longitude REAL
-       );`,{})
-       .then(result => {
-         this.database.executeSql(`CREATE TABLE IF NOT EXISTS user (
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
-         email TEXT,
-         password TEXT,
-         firstaname TEXT,
-         lastname TEXT,
-         phone TEXT
-       );`,{});
-       })
-       .catch(err=>console.error("ERROR creating tables: ", err));
+    let arrTables = [
+      `CREATE TABLE IF NOT EXISTS product (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        type TEXT,
+        quantity REAL,
+        price REAL,
+        latitude REAL,
+        longitude REAL
+      );`,
 
-     });
-      
+      `CREATE TABLE IF NOT EXISTS user (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT,
+        password TEXT,
+        firstaname TEXT,
+        lastname TEXT,
+        phone TEXT
+      );`
+    ];
+
+    return this.database.sqlBatch(arrTables)
+      .then(result => {
+        console.log("Tables Created OK.")
+      })
+      .catch(err=>console.error("ERROR creating tables: ", err));
+  
   }
   
 }
