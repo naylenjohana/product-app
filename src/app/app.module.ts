@@ -12,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {SQLite} from "@ionic-native/sqlite";
 import { Firebase } from '@ionic-native/firebase';
 import { SqliteServiceProvider } from '../providers/sqlite-service/sqlite-service';
+
 @NgModule({
   declarations: [
     MyApp,

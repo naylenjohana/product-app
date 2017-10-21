@@ -29,4 +29,11 @@ export class LoginPage {
 
   }
 
+  /**
+   * onClickRestore(): Método para el procedimiento de resstablecer contraseña
+   */
+  onClickRestore () {
+
+  }
+
 }
