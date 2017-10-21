@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserServiceProvider } from "../../providers/user-service/user-service";
 import { User } from "../../models/user";
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the RegisterUserPage page.
@@ -19,7 +20,7 @@ export class RegisterUserPage {
 
   myForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public userService: UserServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public userService: UserServiceProvider, public alertCtrl: AlertController) {
     this.myForm = this.createForm();
   }
 
@@ -36,8 +37,12 @@ export class RegisterUserPage {
     });
   }
 
+  /**
+   * saveForm: Guarda la información del formulario de Registro
+   */
   public saveForm() {
     let objuser = new User();
+
     objuser.email = this.myForm.value.email;
     objuser.password = this.myForm.value.password;
     objuser.firstaname = this.myForm.value.firstname;
@@ -46,10 +51,25 @@ export class RegisterUserPage {
     this.userService.saveUser(objuser)
     .then(resUser => {
       console.debug(resUser);
+      this.presentAlert('Bienvenido !', resUser.firstaname + ' ' + resUser.lastname + ' registrado correctamente');
     })
-    .catch(err=>console.error("error save user: ", err));
+    .catch(err=>{
+      this.presentAlert('Error', JSON.stringify(err));
+    });
   }
 
- 
+  /**
+   * presentAlert: Muestra un mensaje con el resultado del registro
+   * @param strtitle 
+   * @param strMessage 
+   */
+  private presentAlert(strtitle, strMessage) {
+    const alert = this.alertCtrl.create({
+      title: strtitle,
+      subTitle: strMessage,
+      buttons: ['Aceptar']
+    });
+    alert.present();
+  }
 
 }
