@@ -12,6 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {SQLite} from "@ionic-native/sqlite";
 import { Firebase } from '@ionic-native/firebase';
 import { SqliteServiceProvider } from '../providers/sqlite-service/sqlite-service';
+import { UserServiceProvider } from '../providers/user-service/user-service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SqliteServiceProvider } from '../providers/sqlite-service/sqlite-servic
     SplashScreen,
     SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SqliteServiceProvider
+    SqliteServiceProvider,
+    UserServiceProvider
   ]
 })
 export class AppModule {}

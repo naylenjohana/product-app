@@ -15,7 +15,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 export class SqliteServiceProvider {
 
 
-  private database: SQLiteObject;
+  public database: SQLiteObject;
   private dbReady = new BehaviorSubject<boolean>(false);
 
   constructor(private platform: Platform, private sqlite: SQLite) {
