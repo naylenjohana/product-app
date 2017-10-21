@@ -6,13 +6,39 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>RegisterUser</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Registrarse</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+    <form [formGroup]="myForm" (ngSubmit)="saveForm()">
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input formControlName="email" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Nombres</ion-label>
+                <ion-input formControlName="firstname" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Apellidos</ion-label>
+                <ion-input formControlName="lastname" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input formControlName="password" type="password"></ion-input>
+            </ion-item>
+
+        </ion-list>
+        <button ion-button block type="submit" [disabled]="!myForm.valid">Guardar</button>
+    </form>
 
 </ion-content>

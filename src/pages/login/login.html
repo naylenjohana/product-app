@@ -30,13 +30,20 @@
         <ion-input type="password"></ion-input>
     </ion-item>
 
-    <button ion-button block (click)="onClickLogin">Ingresar</button>
+    <button ion-button block (click)="onClickLogin()">Ingresar</button>
 
     <div class="logo">
-        <button ion-button icon-start outline (click)="onClickRestore">
+        <button ion-button icon-start outline (click)="onClickRestore()">
         <ion-icon name="contact"></ion-icon>
         Cambiar contraseña
       </button>
+    </div>
+
+    <div class="logo">
+        <button ion-button icon-start outline (click)="onClickregister()">
+      <ion-icon name="add"></ion-icon>
+      Registrarme
+    </button>
     </div>
 
 </ion-content>
