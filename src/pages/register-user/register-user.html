@@ -21,20 +21,60 @@
                 <ion-label floating>Email</ion-label>
                 <ion-input formControlName="email" type="text"></ion-input>
             </ion-item>
+            <ion-item *ngIf="!myForm.controls.email.valid && myForm.controls.email.touched">
+                <p>
+                    <span>
+                    Email Inválido
+                    </span>
+                </p>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input formControlName="password" type="password"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!myForm.controls.password.valid && myForm.controls.password.touched">
+                <p>
+                    <span>
+                    Contraseña de mínimo 6 Caracteres
+                    </span>
+                </p>
+            </ion-item>
 
             <ion-item>
                 <ion-label floating>Nombres</ion-label>
                 <ion-input formControlName="firstname" type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!myForm.controls.firstname.valid && myForm.controls.firstname.touched">
+                <p>
+                    <span>
+                    Nombre de mínimo 3 Caracteres
+                    </span>
+                </p>
             </ion-item>
 
             <ion-item>
                 <ion-label floating>Apellidos</ion-label>
                 <ion-input formControlName="lastname" type="text"></ion-input>
             </ion-item>
+            <ion-item *ngIf="!myForm.controls.lastname.valid && myForm.controls.lastname.touched">
+                <p>
+                    <span>
+                    Apellido de mínimo 3 Caracteres
+                    </span>
+                </p>
+            </ion-item>
 
             <ion-item>
-                <ion-label floating>Password</ion-label>
-                <ion-input formControlName="password" type="password"></ion-input>
+                <ion-label floating>Teléfono</ion-label>
+                <ion-input formControlName="phone" type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!myForm.controls.phone.valid && myForm.controls.phone.touched">
+                <p>
+                    <span>
+                    Teléfono de máximo 10 Caracteres
+                    </span>
+                </p>
             </ion-item>
 
         </ion-list>
