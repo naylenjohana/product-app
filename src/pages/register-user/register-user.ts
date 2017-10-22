@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+
 import { UserServiceProvider } from "../../providers/user-service/user-service";
+import { SessionServiceProvider } from '../../providers/session-service/session-service';
 import { User } from "../../models/user";
 import { AlertController } from 'ionic-angular';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the RegisterUserPage page.
@@ -20,7 +23,7 @@ export class RegisterUserPage {
 
   myForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public userService: UserServiceProvider, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public userService: UserServiceProvider, public alertCtrl: AlertController, private sessionService: SessionServiceProvider) {
     this.myForm = this.createForm();
   }
 
@@ -30,10 +33,11 @@ export class RegisterUserPage {
 
   private createForm() {
     return this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      firstname: ['', Validators.compose([Validators.maxLength(20)])],
-      lastname: ['', Validators.compose([Validators.maxLength(20)])],
+      email: ['', Validators.compose([Validators.required, Validators.minLength(6), this.emailValidator.bind(this)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      firstname: ['', Validators.compose([Validators.minLength(3)])],
+      lastname: ['', Validators.compose([Validators.minLength(3)])],
+      phone: ['', Validators.compose([Validators.maxLength(10)])],
     });
   }
 
@@ -47,14 +51,19 @@ export class RegisterUserPage {
     objuser.password = this.myForm.value.password;
     objuser.firstaname = this.myForm.value.firstname;
     objuser.lastname = this.myForm.value.lastname;
+    objuser.phone = this.myForm.value.phone;
 
     this.userService.saveUser(objuser)
     .then(resUser => {
       console.debug(resUser);
-      this.presentAlert('Bienvenido !', resUser.firstaname + ' ' + resUser.lastname + ' registrado correctamente');
+      this.sessionService.setUserSession(resUser)
+      .then(() =>{
+        this.presentAlert(true, 'Bienvenido !', resUser.firstaname + ' ' + resUser.lastname + ' registrado correctamente');
+      });
+
     })
     .catch(err=>{
-      this.presentAlert('Error', JSON.stringify(err));
+      this.presentAlert(false, 'Error', JSON.stringify(err));
     });
   }
 
@@ -63,13 +72,30 @@ export class RegisterUserPage {
    * @param strtitle 
    * @param strMessage 
    */
-  private presentAlert(strtitle, strMessage) {
+  private presentAlert(blnSuccess, strtitle, strMessage) {
     const alert = this.alertCtrl.create({
       title: strtitle,
       subTitle: strMessage,
-      buttons: ['Aceptar']
+      buttons: [{
+        text:'Aceptar',
+        handler: () => {
+          if(blnSuccess) {
+            this.navCtrl.setRoot(HomePage);
+          }
+        }
+      }]
     });
     alert.present();
+  }
+
+
+  public emailValidator(control: FormControl): { [s: string]: boolean } {
+    if (control.value != null && control.value !== '') {
+      var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailPattern.test(control.value.toLowerCase())) {
+        return { invalidEmail: true };
+      }
+    }
   }
 
 }

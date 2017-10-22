@@ -16,7 +16,7 @@ import { PageInterface } from "../models/pages";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
 
   loggedInPages: PageInterface[] = [
     { title: 'Productos', name: 'HomePage', component: HomePage, icon: 'list-box' },
