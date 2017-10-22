@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from "../pages/perfil/perfil";
+import { ChangePassPage } from '../pages/change-pass/change-pass';
 
 
 import { RegisterUserPage } from '../pages/register-user/register-user';
@@ -29,7 +30,8 @@ import { SessionServiceProvider } from '../providers/session-service/session-ser
     LoginPage,
     PerfilPage,
     LoginPage,
-    RegisterUserPage
+    RegisterUserPage,
+    ChangePassPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { SessionServiceProvider } from '../providers/session-service/session-ser
     LoginPage,
     PerfilPage,
     LoginPage,
-    RegisterUserPage
+    RegisterUserPage,
+    ChangePassPage
   ],
   providers: [
     StatusBar,
