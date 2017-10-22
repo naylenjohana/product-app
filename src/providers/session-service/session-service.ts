@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { User } from '../../models/user';
+import { Events } from 'ionic-angular';
 
 /*
   Generated class for the SessionProvider provider.
@@ -12,7 +13,9 @@ import { User } from '../../models/user';
 @Injectable()
 export class SessionServiceProvider {
 
-  constructor(private nativeStorage: NativeStorage) {
+  HAS_LOGGED_IN = 'hasLoggedIn';
+
+  constructor(private nativeStorage: NativeStorage, public events: Events) {
   }
 
   setUserSession(objUser: User): Promise<any> {
@@ -22,5 +25,24 @@ export class SessionServiceProvider {
   getUserSession(): Promise<any> {
     return this.nativeStorage.getItem('myitem');
   }
+
+  hasLoggedIn(): Promise<boolean> {
+    return this.nativeStorage.getItem(this.HAS_LOGGED_IN).then((value) => {
+      return value === true;
+    })
+    .catch((value)=>{
+      return value === false
+    });
+  };
+
+  login(): void {
+    this.nativeStorage.setItem(this.HAS_LOGGED_IN, true);
+    this.events.publish('user:login');
+  };
+
+  logout(): void {
+    this.nativeStorage.remove(this.HAS_LOGGED_IN);
+    this.events.publish('user:logout');
+  };
 
 }

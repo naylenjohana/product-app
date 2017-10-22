@@ -11,13 +11,16 @@ import { RegisterUserPage } from "../pages/register-user/register-user";
 //interface
 import { PageInterface } from "../models/pages";
 
+//services
+import { SessionServiceProvider } from "../providers/session-service/session-service";
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any;
 
   loggedInPages: PageInterface[] = [
     { title: 'Productos', name: 'HomePage', component: HomePage, icon: 'list-box' },
@@ -34,16 +37,21 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public menu: MenuController,
-    public events: Events) {
+    public events: Events,
+    public userData: SessionServiceProvider) {
 
     this.initializeApp();
 
-    /*this.userData.hasLoggedIn().then((hasLoggedIn) => {
+    this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn === true);
-    });*/
-    //this.enableMenu(true);
+      if (hasLoggedIn)
+        this.rootPage = HomePage;
+      else
+        this.rootPage = LoginPage;
+    });
+    this.enableMenu(true);
 
-    //this.listenToLoginEvents();
+    this.listenToLoginEvents();
 
   }
 
@@ -60,9 +68,13 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component)
-    .catch((err: any) => {
-      console.log(`Error al generar Root: ${err}`);
-    });
+      .catch((err: any) => {
+        console.log(`Error al generar Root: ${err}`);
+      });
+
+    if (page.logsOut === true) {
+      this.userData.logout();
+    }
   }
 
   isActive(page) {

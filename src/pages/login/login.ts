@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterUserPage } from '../register-user/register-user';
 import { ChangePassPage } from '../change-pass/change-pass';
+import { HomePage } from "../home/home";
+import { SessionServiceProvider } from "../../providers/session-service/session-service";
 /**
  * Generated class for the LoginPage page.
  *
@@ -16,7 +18,7 @@ import { ChangePassPage } from '../change-pass/change-pass';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userData: SessionServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -27,13 +29,14 @@ export class LoginPage {
    * onClickLogin(): Método para el procedimiento de autenticación 
    */
   onClickLogin() {
-
+    this.userData.login();
+    this.navCtrl.setRoot(HomePage);
   }
 
   /**
    * onClickRestore(): Método para el procedimiento de resstablecer contraseña
    */
-  onClickRestore () {
+  onClickRestore() {
     this.navCtrl.push(ChangePassPage);
   }
 

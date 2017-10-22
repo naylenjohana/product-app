@@ -7,6 +7,9 @@
 <ion-header>
 
     <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>Registrarse</ion-title>
     </ion-navbar>
 
@@ -24,7 +27,7 @@
             <ion-item *ngIf="!myForm.controls.email.valid && myForm.controls.email.touched">
                 <p>
                     <span>
-                    Email Inválido
+                        Email Inválido
                     </span>
                 </p>
             </ion-item>
@@ -36,7 +39,7 @@
             <ion-item *ngIf="!myForm.controls.password.valid && myForm.controls.password.touched">
                 <p>
                     <span>
-                    Contraseña de mínimo 6 Caracteres
+                        Contraseña de mínimo 6 Caracteres
                     </span>
                 </p>
             </ion-item>
@@ -48,7 +51,7 @@
             <ion-item *ngIf="!myForm.controls.firstname.valid && myForm.controls.firstname.touched">
                 <p>
                     <span>
-                    Nombre de mínimo 3 Caracteres
+                        Nombre de mínimo 3 Caracteres
                     </span>
                 </p>
             </ion-item>
@@ -60,7 +63,7 @@
             <ion-item *ngIf="!myForm.controls.lastname.valid && myForm.controls.lastname.touched">
                 <p>
                     <span>
-                    Apellido de mínimo 3 Caracteres
+                        Apellido de mínimo 3 Caracteres
                     </span>
                 </p>
             </ion-item>
@@ -72,7 +75,7 @@
             <ion-item *ngIf="!myForm.controls.phone.valid && myForm.controls.phone.touched">
                 <p>
                     <span>
-                    Teléfono de máximo 10 Caracteres
+                        Teléfono de máximo 10 Caracteres
                     </span>
                 </p>
             </ion-item>

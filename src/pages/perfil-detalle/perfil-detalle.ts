@@ -45,4 +45,8 @@ export class PerfilDetallePage {
     this.viewCtrl.dismiss(data);
   }
 
+  saveForm(){
+    
+  }
+
 }
