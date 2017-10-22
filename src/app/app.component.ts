@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from "../pages/perfil/perfil";
+import { RegisterUserPage } from "../pages/register-user/register-user";
 
 //interface
 import { PageInterface } from "../models/pages";
@@ -20,13 +21,13 @@ export class MyApp {
 
   loggedInPages: PageInterface[] = [
     { title: 'Productos', name: 'HomePage', component: HomePage, icon: 'list-box' },
-    { title: 'Perfil', name: 'AccountPage', component: PerfilPage, icon: 'person' },
-    { title: 'Cerrar Sesión', name: 'TabsPage', component: LoginPage, icon: 'log-out', logsOut: true }
+    { title: 'Perfil', name: 'PerfilPage', component: PerfilPage, icon: 'person' },
+    { title: 'Cerrar Sesión', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
   ];
 
   loggedOutPages: PageInterface[] = [
     { title: 'Iniciar Sesión', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'Regístrate', name: 'SignupPage', component: LoginPage, icon: 'person-add' }
+    { title: 'Regístrate', name: 'RegisterUserPage', component: RegisterUserPage, icon: 'person-add' }
   ];
 
   constructor(public platform: Platform,
@@ -58,7 +59,10 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component)
+    .catch((err: any) => {
+      console.log(`Error al generar Root: ${err}`);
+    });
   }
 
   isActive(page) {
@@ -66,7 +70,6 @@ export class MyApp {
     if (this.nav.getActive() && this.nav.getActive().name === page.name) {
       return 'primary';
     }
-    this.enableMenu(true);
     return;
   }
 

@@ -9,9 +9,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from "../pages/perfil/perfil";
-
-
 import { RegisterUserPage } from '../pages/register-user/register-user';
+import { PerfilDetallePage } from "../pages/perfil-detalle/perfil-detalle";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +26,8 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     LoginPage,
     PerfilPage,
     LoginPage,
-    RegisterUserPage
+    RegisterUserPage,
+    PerfilDetallePage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +42,8 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     LoginPage,
     PerfilPage,
     LoginPage,
-    RegisterUserPage
+    RegisterUserPage,
+    PerfilDetallePage
   ],
   providers: [
     StatusBar,
