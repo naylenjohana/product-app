@@ -23,6 +23,7 @@ import { Firebase } from '@ionic-native/firebase';
 import { SqliteServiceProvider } from '../providers/sqlite-service/sqlite-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { SessionServiceProvider } from '../providers/session-service/session-service';
+import { ProductServiceProvider } from '../providers/product-service/product-service';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { SessionServiceProvider } from '../providers/session-service/session-ser
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     SqliteServiceProvider,
     UserServiceProvider,
-    SessionServiceProvider
+    SessionServiceProvider,
+    ProductServiceProvider
   ]
 })
 export class AppModule { }
