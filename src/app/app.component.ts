@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController, Events } from 'ionic-angular';
+import { Nav, Platform, MenuController, Events, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -38,7 +38,8 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public menu: MenuController,
     public events: Events,
-    public userData: SessionServiceProvider) {
+    public userData: SessionServiceProvider,
+    public alertctrl: AlertController) {
 
     this.initializeApp();
 
@@ -67,13 +68,36 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component)
-      .catch((err: any) => {
-        console.log(`Error al generar Root: ${err}`);
-      });
-
     if (page.logsOut === true) {
-      this.userData.logout();
+
+      let confirm = this.alertctrl.create({
+        title: '¡Cerrar sesión!',
+        message: 'Esta seguro que quiere cerrar la sesión?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              console.log('Cancelar cierre sesión');
+            }
+          },
+          {
+            text: 'Ok',
+            handler: () => {
+              this.userData.logout();
+              this.nav.setRoot(page.component)
+                .catch((err: any) => {
+                  console.log(`Error al generar Root: ${err}`);
+                });
+            }
+          }
+        ]
+      });
+      confirm.present();
+    } else {
+      this.nav.setRoot(page.component)
+        .catch((err: any) => {
+          console.log(`Error al generar Root: ${err}`);
+        });
     }
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 /**
@@ -19,7 +19,7 @@ export class PerfilDetallePage {
   myForm: FormGroup;
   email: string;
 
-  constructor(public viewCtrl: ViewController, public formBuilder: FormBuilder, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController, public formBuilder: FormBuilder, public navParams: NavParams, public alertctrl: AlertController) {
     this.myForm = this.createForm();
     this.email = this.navParams.get('email');
 
@@ -45,8 +45,26 @@ export class PerfilDetallePage {
     this.viewCtrl.dismiss(data);
   }
 
-  saveForm(){
-    
+  saveForm() {
+    let confirm = this.alertctrl.create({
+      title: '¡Actualizar Datos!',
+      message: 'Esta seguro que quiere editar los datos de su perfil?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            this.dismiss();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }
