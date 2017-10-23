@@ -5,6 +5,6 @@ export class Product {
     quantity: number;
     price: number;
     latitude:string;
-    length:string;    
+    longitude:string;    
     image:string;
   }

@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import{ProductListPage} from '../pages/product-list/product-list';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from "../pages/perfil/perfil";
 import { RegisterUserPage } from "../pages/register-user/register-user";
@@ -23,7 +24,7 @@ export class MyApp {
   rootPage: any;
 
   loggedInPages: PageInterface[] = [
-    { title: 'Productos', name: 'HomePage', component: HomePage, icon: 'list-box' },
+    { title: 'Productos', name: 'HomePage', component: ProductListPage, icon: 'list-box' },
     { title: 'Perfil', name: 'PerfilPage', component: PerfilPage, icon: 'person' },
     { title: 'Cerrar Sesión', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
   ];

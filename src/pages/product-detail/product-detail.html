@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Agregar producto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="myForm" (ngSubmit)="saveForm()">
+    <ion-list>
+  
+      <ion-item>
+        <ion-label floating>Nombre</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Tipo</ion-label>
+        <ion-input formControlName="type" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Cantidad</ion-label>
+        <ion-input formControlName="quantity" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Precio</ion-label>
+        <ion-input formControlName="price" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Latitud</ion-label>
+        <ion-input formControlName="latitude" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Longitud</ion-label>
+        <ion-input formControlName="longitude" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Imagen</ion-label>
+        <ion-input formControlName="image" type="text"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button block type="submit" [disabled]="!myForm.valid">Guardar</button>
+  </form>
+</ion-content>

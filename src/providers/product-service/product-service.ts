@@ -15,7 +15,7 @@ export class ProductServiceProvider {
   
     public addProduct(product: Product){
       return this.database.addProduct(product.name,product.type,product.quantity,
-        product.price,product.latitude,product.length,product.image)
+        product.price,product.latitude,product.longitude,product.image)
         .then(list => {
           return this.getProducts()
             .then(() => {
@@ -27,7 +27,7 @@ export class ProductServiceProvider {
   
     public updateProduct(product: Product){
       return this.database.updateProduct(product.id,product.name,product.type,product.quantity,
-        product.price,product.latitude,product.length,product.image)
+        product.price,product.latitude,product.longitude,product.image)
         .then(list => {
           return this.getProducts()
             .then(() => {

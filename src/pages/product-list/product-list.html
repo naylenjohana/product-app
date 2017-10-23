@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Productos
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab mini (click)="addProductModal()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+  <ion-list>
+    <button ion-item *ngFor="let item of productService.listProducts" (click)="itemSelected(item)">
+      {{ item.name }}
+    </button>
+  </ion-list>
+</ion-content>

@@ -9,7 +9,6 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 @Injectable()
 export class SqliteServiceProvider {
 
-
   public database: SQLiteObject;
   private dbReady = new BehaviorSubject<boolean>(false);
 
@@ -36,7 +35,7 @@ export class SqliteServiceProvider {
   private createTables() {
 
     let arrTables = [
-      `CREATE TABLE IF NOT EXISTS product (
+      `CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         type TEXT,
@@ -97,10 +96,18 @@ export class SqliteServiceProvider {
   
   
   updateProduct(id:number, name: string,type:string,quantity:number,price:number, latitude:string
-    ,lenght:string,image:string) {
+    ,longitude:string,image:string) {
       return this.isReady()
         .then(() => {
-          return this.database.executeSql(`UPDATE products SET name=('${name}') WHERE id=('${id}');`, {})
+          return this.database.executeSql(`UPDATE products SET 
+          name=('${name}'),
+          type=('${type}'),
+          quantity=('${quantity}'),
+          price=('${price}'),
+          latitude=('${latitude}'),
+          longitude=('${longitude}'),
+          image=('${image}')
+          WHERE id=('${id}');`, {})
             .then(result => {
               if(result.insertId) return this.getProduct(result.insertId);
             })
@@ -110,12 +117,13 @@ export class SqliteServiceProvider {
 
 
     addProduct(name: string,type:string,quantity:number,price:number, latitude:string
-      ,lenght:string,image:string) {
+      ,longitude:string,image:string) {
       return this.isReady()
         .then(() => {
-          return this.database.executeSql(`INSERT INTO products(name,type,quantity,price,latitude,lenght,image)
+          return this.database.executeSql(`INSERT INTO 
+          products(name,type,quantity,price,latitude,longitude,image)
            VALUES ('${name}','${type}','${quantity}','${price}','${latitude}'
-           ,'${lenght}','${image}');`, {})
+           ,'${longitude}','${image}');`, {})
             .then(result => {
               if(result.insertId) return this.getProduct(result.insertId);
             })
@@ -132,9 +140,7 @@ export class SqliteServiceProvider {
       .catch(err => console.error(err));
   }
 
-  
-
-  private isReady() {
+    private isReady() {
     return new Promise((resolve, reject) => {
       if(this.dbReady.getValue()) {
         resolve();

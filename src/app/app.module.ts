@@ -11,8 +11,8 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from "../pages/perfil/perfil";
 import { ChangePassPage } from '../pages/change-pass/change-pass';
-
-
+import {ProductListPage} from '../pages/product-list/product-list';
+import {ProductDetailPage} from '../pages/product-detail/product-detail';
 import { RegisterUserPage } from '../pages/register-user/register-user';
 import { PerfilDetallePage } from "../pages/perfil-detalle/perfil-detalle";
 
@@ -34,7 +34,9 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     LoginPage,
     RegisterUserPage,
     PerfilDetallePage,
-    ChangePassPage
+    ChangePassPage,
+    ProductListPage,
+    ProductDetailPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,9 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     LoginPage,
     RegisterUserPage,
     PerfilDetallePage,
-    ChangePassPage
+    ChangePassPage,
+    ProductListPage,
+    ProductDetailPage
   ],
   providers: [
     StatusBar,
