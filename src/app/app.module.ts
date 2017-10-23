@@ -28,6 +28,7 @@ import { SessionServiceProvider } from '../providers/session-service/session-ser
 import { FirebaseServiceProvider } from '../providers/firebase-service/firebase-service';
 
 import { firebase } from '../config/enviroment';
+import { ProductServiceProvider } from '../providers/product-service/product-service';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { firebase } from '../config/enviroment';
     SqliteServiceProvider,
     UserServiceProvider,
     SessionServiceProvider,
-    FirebaseServiceProvider
+    FirebaseServiceProvider,
+    ProductServiceProvider
   ]
 })
 export class AppModule { }
