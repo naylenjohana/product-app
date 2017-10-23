@@ -4,24 +4,13 @@ import 'rxjs/add/operator/map';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
-/*
-  Generated class for the FirebaseServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class FirebaseServiceProvider {
 
-  products: Observable<any[]>;
+  users: Observable<any[]>;
 
   constructor(public http: Http, public db: AngularFireDatabase) {
-    this.cargar_ultimo_key().subscribe();
-  }
-
-  cargar_ultimo_key() {
-    return this.db.list('/users').valueChanges();
-
+    this.users = db.list('users').valueChanges();
   }
 
   addUser(firstname: string, lastname: string, email: string, phone: number, password: string) {
@@ -47,7 +36,7 @@ export class FirebaseServiceProvider {
     this.db.object(`/users/${idUser}`).update(user);
   }
 
-  deleteUser(idUser: string){
+  deleteUser(idUser: string) {
     this.db.object(`/users/${idUser}`).remove();
   }
 

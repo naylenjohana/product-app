@@ -22,45 +22,45 @@
   <form [formGroup]="myForm" (ngSubmit)="saveForm()">
     <ion-list>
       <ion-item>
-        <ion-label color="primary" floating>Nombre(s)</ion-label>
+        <ion-label color="primary" stacked>Nombre(s)</ion-label>
         <ion-input formControlName="surename" type="text"></ion-input>
       </ion-item>
       <ion-item *ngIf="!myForm.controls.surename.valid && myForm.controls.surename.touched">
         <p>
-          <span>
+          <span ion-text color="danger">
             Nombre(s) de mínimo 3 Caracteres
           </span>
         </p>
       </ion-item>
       <ion-item>
-        <ion-label color="primary" floating>Apellido(s)</ion-label>
+        <ion-label color="primary" stacked>Apellido(s)</ion-label>
         <ion-input formControlName="lastname" type="text"></ion-input>
       </ion-item>
       <ion-item *ngIf="!myForm.controls.lastname.valid && myForm.controls.lastname.touched">
         <p>
-          <span>
-            Apellido(s) de mínimo 3 Caracteres
+          <span ion-text color="danger">
+            Nombre(s) de mínimo 3 Caracteres
           </span>
         </p>
       </ion-item>
       <ion-item>
-        <ion-label color="primary" floating>Teléfono</ion-label>
+        <ion-label color="primary" stacked>Teléfono</ion-label>
         <ion-input formControlName="phone" type="number"></ion-input>
       </ion-item>
       <ion-item *ngIf="!myForm.controls.phone.valid && myForm.controls.phone.touched">
         <p>
-          <span>
+          <span ion-text color="danger">
             Teléfono de mínimo 3 Caracteres, maximo 10
           </span>
         </p>
       </ion-item>
       <ion-item>
-        <ion-label color="primary" floating>Password</ion-label>
+        <ion-label color="primary" stacked>Password</ion-label>
         <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
       <ion-item *ngIf="!myForm.controls.password.valid && myForm.controls.password.touched">
         <p>
-          <span>
+          <span ion-text color="danger">
             Password de mínimo 6 Caracteres
           </span>
         </p>
