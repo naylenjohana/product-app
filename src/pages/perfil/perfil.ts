@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { LoginPage } from "../login/login";
 import { PerfilDetallePage } from "../perfil-detalle/perfil-detalle";
 import { SessionServiceProvider } from "../../providers/session-service/session-service";
+import { FirebaseServiceProvider } from "../../providers/firebase-service/firebase-service";
 
 /**
  * Generated class for the PerfilPage page.
@@ -18,7 +19,8 @@ import { SessionServiceProvider } from "../../providers/session-service/session-
 })
 export class PerfilPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public userData: SessionServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public userData: SessionServiceProvider, public sf: FirebaseServiceProvider, public alertctrl: AlertController) {
+
   }
 
   ionViewDidLoad() {
@@ -26,21 +28,60 @@ export class PerfilPage {
   }
 
   logout() {
-    this.userData.logout();      
-    this.navCtrl.setRoot(LoginPage)
-    .catch((err: any) => {
-      console.log(`Error al generar Root: ${err}`);
+    let confirm = this.alertctrl.create({
+      title: '¡Cerrar sesión!',
+      message: 'Esta seguro que quiere cerrar la sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            console.log('Cancelar cierre sesión');
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            this.userData.logout();
+            this.navCtrl.setRoot(LoginPage)
+              .catch((err: any) => {
+                console.log(`Error al generar Root: ${err}`);
+              });
+          }
+        }
+      ]
     });
+    confirm.present();
   }
 
-  editPerson(){
-    console.log("editar")
-    let editProfile = this.modalCtrl.create(PerfilDetallePage, {email: "email@email.com"});
+  editPerson() {
+    let editProfile = this.modalCtrl.create(PerfilDetallePage, { email: "email@email.com" });
     editProfile.onDidDismiss(data => {
       console.log(data);
     });
     editProfile.present();
 
+  }
+
+  removePerson() {
+    let confirm = this.alertctrl.create({
+      title: '¡Eliminar Cuenta!',
+      message: 'Esta seguro que quiere eliminar la cuenta?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }

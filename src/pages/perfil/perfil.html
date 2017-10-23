@@ -17,10 +17,15 @@
     <h5>telefono</h5>
 
     <ion-list inset>
-
-      <button ion-button outline block (click)="editPerson()">Editar</button>
-      <button ion-button outline block (click)="logout()">Cerrar Sesión</button>
-      <button ion-button outline block color="danger">Eliminar Cuenta</button>
+      <p>
+        <button ion-button outline block medium (click)="editPerson()">Editar</button>
+      </p>
+      <p>
+        <button ion-button outline block medium (click)="logout()">Cerrar Sesión</button>
+      </p>
+      <p>
+        <button ion-button outline block medium color="danger" (click)="removePerson()">Eliminar Cuenta</button>
+      </p>
 
     </ion-list>
   </div>

@@ -4,6 +4,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { FormsModule } from "@angular/forms";
 import { NativeStorage } from '@ionic-native/native-storage';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
 
 //Pages
 import { MyApp } from './app.component';
@@ -23,6 +25,9 @@ import { Firebase } from '@ionic-native/firebase';
 import { SqliteServiceProvider } from '../providers/sqlite-service/sqlite-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { SessionServiceProvider } from '../providers/session-service/session-service';
+import { FirebaseServiceProvider } from '../providers/firebase-service/firebase-service';
+
+import { firebase } from '../config/enviroment';
 import { ProductServiceProvider } from '../providers/product-service/product-service';
 
 @NgModule({
@@ -43,6 +48,8 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     HttpModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebase),
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -66,6 +73,7 @@ import { ProductServiceProvider } from '../providers/product-service/product-ser
     SqliteServiceProvider,
     UserServiceProvider,
     SessionServiceProvider,
+    FirebaseServiceProvider,
     ProductServiceProvider
   ]
 })
