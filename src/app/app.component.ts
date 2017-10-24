@@ -24,7 +24,7 @@ export class MyApp {
   rootPage: any;
 
   loggedInPages: PageInterface[] = [
-    { title: 'Productos', name: 'HomePage', component: ProductListPage, icon: 'list-box' },
+    { title: 'Productos', name: 'ProductListPage', component: ProductListPage, icon: 'list-box' },
     { title: 'Perfil', name: 'PerfilPage', component: PerfilPage, icon: 'person' },
     { title: 'Cerrar Sesión', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
   ];

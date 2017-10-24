@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterUserPage } from '../register-user/register-user';
 import { ChangePassPage } from '../change-pass/change-pass';
-import { HomePage } from "../home/home";
+import { ProductListPage } from "../product-list/product-list";
 import { SessionServiceProvider } from "../../providers/session-service/session-service";
 /**
  * Generated class for the LoginPage page.
@@ -30,7 +30,7 @@ export class LoginPage {
    */
   onClickLogin() {
     this.userData.login();
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.setRoot(ProductListPage);
   }
 
   /**
