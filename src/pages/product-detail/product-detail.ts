@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams, AlertController } from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProductServiceProvider} from "../../providers/product-service/product-service";
 import{Product} from '../../models/product';
@@ -15,69 +15,142 @@ export class ProductDetailPage {
 
   myForm: FormGroup;
   public product:Product;
- // public id: number;
-  //public name: string;
+  public title:string;
+  public editando:boolean=false;
 
   constructor(public viewCtrl: ViewController,
               public formBuilder: FormBuilder,
               private productServiceProvider :ProductServiceProvider,
-              public nav: NavParams) {
+              public nav: NavParams,public alertctrl: AlertController) {
 
     this.product=new Product();
-    this.product.id =parseInt(nav.get('id'));   
-    console.log(this.product.id); 
-    if(this.product.id)
+    this.product.id =parseInt(nav.get('id'));
+    if(this.product.id)this.editando=true;
+    if(this.editando)
     {
-      this.getProduct();
+      this.getProduct();   
+      this.title='Editar Producto';
     }
-    //console.log(this.id);
-    //this.name = nav.get('name');
-    this.myForm = this.createForm();
+    else
+    {
+      this.title='Crear Producto';
+    }
+    
+    this.myForm = this.createForm();    
   }
 
   private createForm() {
     return this.formBuilder.group({
       id:[this.product.id],
       name: [this.product.name, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(10)])],
-      type:[this.product.type],
-      quantity:[this.product.quantity],
-      price:[this.product.price],
-      latitude:[this.product.latitude],
-      longitude:[this.product.longitude],
+      type:[this.product.type, Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
+      quantity:[this.product.quantity, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(10)])],
+      price:[this.product.price,Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
+      latitude:[this.product.latitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
+      longitude:[this.product.longitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
       image:[this.product.image],
     });
   }
 
   public getProduct()
-  {
-    console.log('this is ' +this.product.id)
+  {    
     this.productServiceProvider.getProduct(this.product.id)
     .then(result => {
       this.product=result;
-      console.log(result);
+      this.myForm = this.createForm();
     })
     .catch(err=>console.error("error get product: ", err));
   }
 
+  DeleteProductdb()
+  {
+    this.productServiceProvider.removeProduct(this.product)
+    .then(result => {
+     console.log('Se eliminio el producto correctamente');
+    })
+    .catch(err=>console.error("error get product: ", err));
+  }
+  
+
+  DeleteProduct() {
+    console.log(this.editando);
+    let confirm = this.alertctrl.create({
+      title: 'Eliminar Producto',
+      message: '¿Está seguro que desea eliminar el producto?',
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.DeleteProductdb();
+            this.dismiss();
+          }
+        }]
+    });
+    confirm.present();
+  }
+
   public saveForm() {
-    if(!this.product.id)
+    
+    let message:string;
+    let title:string;
+    if(!this.editando)
     {
-    this.productServiceProvider.addProduct(this.myForm.value)
-      .then(result => {
-        console.debug(result);
-        this.dismiss();
-      })
-      .catch(err=>console.error("error create product: ", err));
+      message='¿Está seguro que desea crear el producto?';
+      title='Crear producto';
+    
     }
     else
     {
-      this.productServiceProvider.updateProduct(this.myForm.value)
-      .then(result => {
-        console.debug(result);
-        this.dismiss();
-      })
-      .catch(err=>console.error("error create product: ", err));
+      message='¿Está seguro que desea editar el producto?';
+      title='Editar producto';      
     }
+    let confirm = this.alertctrl.create({
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'Cancelar'
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            if(this.editando)
+            {
+                this.updateProduct();
+            }
+            else
+            {
+              this.addProduct();
+            }
+            
+            this.dismiss();
+          }
+        }]
+    });
+    confirm.present();
+  }
+
+  addProduct()
+  {
+    this.productServiceProvider.addProduct(this.myForm.value)
+    .then(result => {
+      console.debug(result);
+      this.dismiss();
+    })
+    .catch(err=>console.error("error create product: ", err));
+  }
+  updateProduct()
+  {
+    this.productServiceProvider.updateProduct(this.myForm.value)
+    .then(result => {
+      console.debug(result);
+      this.dismiss();
+    })
+    .catch(err=>console.error("error create product: ", err));
+
   }
 
   public dismiss() {

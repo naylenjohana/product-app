@@ -7,7 +7,7 @@ import {Product} from '../../models/product';
 @Injectable()
 export class ProductServiceProvider {
 
-  public listProducts: any;
+  public listProducts: any;  
   
     constructor(public database:SqliteServiceProvider) {
       this.getProducts();
@@ -53,7 +53,7 @@ export class ProductServiceProvider {
   
     public getProduct(id: number) {
       return this.database.getProduct(id)
-        .then((data:any) => {
+        .then((data:any) => {          
           return data;
         })
         .catch(err=>console.error("error list of products: ", err));

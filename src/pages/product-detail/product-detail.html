@@ -1,13 +1,12 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Agregar producto</ion-title>
+    <ion-title>title</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <form [formGroup]="myForm" (ngSubmit)="saveForm()">
-    <ion-list>
-  
+    <ion-list>      
       <ion-item>
         <ion-label floating>Nombre</ion-label>
         <ion-input formControlName="name" type="text"></ion-input>
@@ -39,4 +38,5 @@
     </ion-list>
     <button ion-button block type="submit" [disabled]="!myForm.valid">Guardar</button>
   </form>
-</ion-content>
+ <button ion-button block type="button" (click)="DeleteProduct()" ng-hide="!editando">Eliminar</button>
+ </ion-content>
