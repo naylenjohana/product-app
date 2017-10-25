@@ -52,7 +52,8 @@ $colors: (
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
+$toolbar-md-background: color($colors, primary);
+$toolbar-md-active-color:  #fff;
 
 
 
