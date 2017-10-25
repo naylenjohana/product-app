@@ -41,14 +41,14 @@ export class ProductDetailPage {
 
   private createForm() {
     return this.formBuilder.group({
-      id:[this.product.id],
+      id: [this.product.id],
       name: [this.product.name, Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(10)])],
       type:[this.product.type, Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
       quantity:[this.product.quantity, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(10)])],
       price:[this.product.price,Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
       latitude:[this.product.latitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
       longitude:[this.product.longitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
-      image:[this.product.image],
+      image:['this.product.image'],
     });
   }
 
@@ -135,6 +135,8 @@ export class ProductDetailPage {
 
   addProduct()
   {
+    console.log('add');
+    console.log(this.myForm.value)
     this.productServiceProvider.addProduct(this.myForm.value)
     .then(result => {
       console.debug(result);

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {SqliteServiceProvider} from "../sqlite-service/sqlite-service";
-import {Product} from '../../models/product';
+import { SqliteServiceProvider } from "../sqlite-service/sqlite-service";
+import { Product } from '../../models/product';
 
 @Injectable()
 export class ProductServiceProvider {
@@ -23,33 +23,33 @@ export class ProductServiceProvider {
             })
             .catch(err=>console.error("error create product: ", err));
       });
-    }
-  
-    public updateProduct(product: Product){
-      return this.database.updateProduct(product.id,product.name,product.type,product.quantity,
-        product.price,product.latitude,product.longitude,product.image)
-        .then(list => {
-          return this.getProducts()
-            .then(() => {
-              return list;
-            })
-            .catch(err=>console.error("error create product: ", err));
+  }
+
+  public updateProduct(product: Product) {
+    return this.database.updateProduct(product.id, product.name, product.type, product.quantity,
+      product.price, product.latitude, product.longitude, product.image)
+      .then(list => {
+        return this.getProducts()
+          .then(() => {
+            return list;
+          })
+          .catch(err => console.error("error create product: ", err));
       });
-    }
-  
-    public getProducts() {
-      return this.database.getProducts()
-        .then((data:any) => {
-          let listProducts: any = [];
-          if (data) {
-            for(let item of data) {
-              listProducts.push(item);
-            }
+  }
+
+  public getProducts() {
+    return this.database.getProducts()
+      .then((data:any) => {
+        let listProducts: any = [];
+        if (data) {
+          for(let item of data) {
+            listProducts.push(item);
           }
-          this.listProducts = listProducts;
-        })
-        .catch(err=>console.error("error list of products: ", err));
-    }
+        }
+        this.listProducts = listProducts;
+      })
+      .catch(err=>console.error("error list of products: ", err));
+  }
   
     public getProduct(id: number) {
       return this.database.getProduct(id)
@@ -67,5 +67,4 @@ export class ProductServiceProvider {
         })
         .catch(err=>console.error("error remove product: ", err));
     }
-
-}
+  }

@@ -3,8 +3,7 @@ import { Nav, Platform, MenuController, Events, AlertController } from 'ionic-an
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-import{ProductListPage} from '../pages/product-list/product-list';
+import { ProductListPage } from '../pages/product-list/product-list';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from "../pages/perfil/perfil";
 import { RegisterUserPage } from "../pages/register-user/register-user";
@@ -24,7 +23,7 @@ export class MyApp {
   rootPage: any;
 
   loggedInPages: PageInterface[] = [
-    { title: 'Productos', name: 'HomePage', component: ProductListPage, icon: 'list-box' },
+    { title: 'Productos', name: 'ProductListPage', component: ProductListPage, icon: 'list-box' },
     { title: 'Perfil', name: 'PerfilPage', component: PerfilPage, icon: 'person' },
     { title: 'Cerrar Sesión', name: 'LoginPage', component: LoginPage, icon: 'log-out', logsOut: true }
   ];
@@ -47,7 +46,7 @@ export class MyApp {
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn === true);
       if (hasLoggedIn)
-        this.rootPage = HomePage;
+        this.rootPage = ProductListPage;
       else
         this.rootPage = LoginPage;
     });

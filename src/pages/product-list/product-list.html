@@ -1,5 +1,8 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>
       Productos
     </ion-title>
@@ -8,11 +11,22 @@
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button ion-fab mini (click)="addProductModal()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="addProductModal()">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-fab>
-  <ion-list>
-    <button ion-item *ngFor="let item of productService.listProducts" (click)="itemSelected(item)">
-      {{ item.name }}
+  <ion-list>    
+    <button  ion-item *ngFor="let item of productService.listProducts" (click)="itemSelected(item)">
+      
+      <ion-card>
+          <ion-card-header>
+              {{ item.name }}
+          </ion-card-header>
+          <ion-card-content>
+              <p>Tipo: <span>{{item.type}}</span> </p>
+              <p>Precio:($) <span>{{item.price}}</span> </p>
+          </ion-card-content>
+        </ion-card>
     </button>
   </ion-list>
 </ion-content>
