@@ -44,16 +44,16 @@ export class FirebaseServiceProvider {
 
   addProduct(product:Product) 
   {   
-    this.db.object(`/products/${product.id}`).set(product);
+    return this.db.object(`/products/${product.id}`).set(product);
   }
 
   updateProduct(product:Product)
   {    
-    this.db.object(`/products/${product}`).update(product);
+    return this.db.object(`/products/${product.id}`).update(product);
   }
 
-  deleteProduct(idproduct: string) {
-    this.db.object(`/users/${idproduct}`).remove();
+  deleteProduct(idproduct: number) {
+    return this.db.object(`/products/${idproduct}`).remove();
   }
 
 }

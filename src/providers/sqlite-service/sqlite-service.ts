@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import { SQLite, SQLiteObject } from "@ionic-native/sqlite";
 import { Platform } from "ionic-angular";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { FirebaseServiceProvider } from "../firebase-service/firebase-service";
+import { Product } from "../../models/product";
 
 
 @Injectable()
@@ -12,7 +14,7 @@ export class SqliteServiceProvider {
   public database: SQLiteObject;
   private dbReady = new BehaviorSubject<boolean>(false);
 
-  constructor(private platform: Platform, private sqlite: SQLite) {
+  constructor(private platform: Platform, private sqlite: SQLite, private fbCtrl:FirebaseServiceProvider) {
 
     this.platform.ready().then(() => {
       this.sqlite.create({
@@ -96,6 +98,16 @@ export class SqliteServiceProvider {
 
   updateProduct(id: number, name: string, type: string, quantity: number, price: number, latitude: string
     , longitude: string) {
+
+      let product : Product = new Product();
+      product.id = id;
+      product.name = name;
+      product.type = type;
+      product.quantity = quantity;
+      product.price = price;
+      product.latitude = latitude;
+      product.longitude = longitude;
+
     return this.isReady()
       .then(() => {
         return this.database.executeSql(`UPDATE products SET 
@@ -107,7 +119,11 @@ export class SqliteServiceProvider {
           longitude=('${longitude}')
           WHERE id=('${id}');`, {})
           .then(result => {
-            if (result.insertId) return this.getProduct(result.insertId);
+            this.fbCtrl.updateProduct(product).then(()=>{
+              if (result.insertId) return this.getProduct(result.insertId);
+            })
+            .catch(err => console.error(err));
+            
           })
           .catch(err => console.error(err));
       });
@@ -116,6 +132,15 @@ export class SqliteServiceProvider {
 
   addProduct(name: string, type: string, quantity: number, price: number, latitude: string
     , longitude: string) {
+
+    let product: Product = new Product();
+    product.name = name;
+    product.type = type;
+    product.quantity = quantity;
+    product.price = price;
+    product.latitude = latitude;
+    product.longitude = longitude;
+
     return this.isReady()
       .then(() => {
         return this.database.executeSql(`INSERT INTO 
@@ -123,7 +148,14 @@ export class SqliteServiceProvider {
            VALUES ('${name}','${type}','${quantity}','${price}','${latitude}'
            ,'${longitude}');`, {})
           .then(result => {
-            if (result.insertId) return this.getProduct(result.insertId);
+            
+            if (result.insertId){
+              product.id = result.insertId;
+              this.fbCtrl.addProduct(product).then(()=> {
+                return this.getProduct(result.insertId)
+              })
+              .catch(err => console.error(err));              
+            }
           })
           .catch(err => console.error(err));
       });
@@ -133,7 +165,11 @@ export class SqliteServiceProvider {
   deleteProduct(id: number) {
     return this.isReady()
       .then(() => {
-        return this.database.executeSql(`DELETE FROM products WHERE id = ${id}`, [])
+        this.fbCtrl.deleteProduct(id).then(()=>{
+          return this.database.executeSql(`DELETE FROM products WHERE id = ${id}`, [])
+        })
+        .catch(err => console.error(err));
+        
       })
       .catch(err => console.error(err));
   }
