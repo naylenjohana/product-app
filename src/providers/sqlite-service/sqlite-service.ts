@@ -42,8 +42,7 @@ export class SqliteServiceProvider {
         quantity REAL,
         price REAL,
         latitude REAL,
-        longitude REAL,
-        image  TEXT
+        longitude REAL
       );`,
 
       `CREATE TABLE IF NOT EXISTS user (
@@ -96,7 +95,7 @@ export class SqliteServiceProvider {
 
 
   updateProduct(id: number, name: string, type: string, quantity: number, price: number, latitude: string
-    , longitude: string, image:string) {
+    , longitude: string) {
     return this.isReady()
       .then(() => {
         return this.database.executeSql(`UPDATE products SET 
@@ -105,8 +104,7 @@ export class SqliteServiceProvider {
           quantity=('${quantity}'),
           price=('${price}'),
           latitude=('${latitude}'),
-          longitude=('${longitude}'),
-          image=('${image}')
+          longitude=('${longitude}')
           WHERE id=('${id}');`, {})
           .then(result => {
             if (result.insertId) return this.getProduct(result.insertId);
@@ -117,13 +115,13 @@ export class SqliteServiceProvider {
 
 
   addProduct(name: string, type: string, quantity: number, price: number, latitude: string
-    , longitude: string, image:string) {
+    , longitude: string) {
     return this.isReady()
       .then(() => {
         return this.database.executeSql(`INSERT INTO 
-          products(name,type,quantity,price,latitude,longitude,image)
+          products(name,type,quantity,price,latitude,longitude)
            VALUES ('${name}','${type}','${quantity}','${price}','${latitude}'
-           ,'${longitude}','${image}');`, {})
+           ,'${longitude}');`, {})
           .then(result => {
             if (result.insertId) return this.getProduct(result.insertId);
           })

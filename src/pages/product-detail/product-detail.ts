@@ -47,8 +47,7 @@ export class ProductDetailPage {
       quantity:[this.product.quantity, Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(10)])],
       price:[this.product.price,Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
       latitude:[this.product.latitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
-      longitude:[this.product.longitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
-      image:['this.product.image'],
+      longitude:[this.product.longitude,Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])]
     });
   }
 
