@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { User } from '../../models/user'; 
 import { SqliteServiceProvider } from '../sqlite-service/sqlite-service';
+import { SessionServiceProvider } from '../../providers/session-service/session-service';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -13,7 +14,7 @@ import { SqliteServiceProvider } from '../sqlite-service/sqlite-service';
 @Injectable()
 export class UserServiceProvider {
 
-  constructor(public http: Http, public sqLite: SqliteServiceProvider) {
+  constructor(public http: Http, public sqLite: SqliteServiceProvider, private sessionService: SessionServiceProvider) {
     console.log('Hello UserServiceProvider Provider');
   }
 
@@ -27,7 +28,7 @@ export class UserServiceProvider {
 
     if(objUser.id <= 1) {
       strSQL = `INSERT INTO user(email, password, firstaname, lastname, phone) VALUES (?,?,?,?,?);`;
-      arrValues = [objUser.email, objUser.password, objUser.firstaname, objUser.lastname, objUser.phone];
+      arrValues = [objUser.email, btoa(objUser.password), objUser.firstaname, objUser.lastname, objUser.phone];
     }
     else {
       strSQL = `UPDATE user SET email=?, password=?, firstaname=?, lastname=?, phone=? WHERE id= ?`;
@@ -55,7 +56,7 @@ export class UserServiceProvider {
    * @param strEmail 
    * @param strPassword 
    */
-  verifyAuthUser(strEmail:string, strPassword:string) {
+  verifyAuthUser(strEmail:string, strPassword:string): Promise<boolean> {
     let strPassencrypt = btoa(strPassword);
     let strSQL = `SELECT Count(id) AS mycount FROM user WHERE email=? AND password=?;`;
     let arrValues = [strEmail, strPassencrypt];
@@ -65,10 +66,11 @@ export class UserServiceProvider {
       this.sqLite.database.executeSql(strSQL, arrValues)
       .then(result => {
         if(result.rows.item(0).mycount > 0) {
+          this.loadUserInSession(strEmail, strPassencrypt);
           resolve(true);
         }
         else {
-          reject(false);
+          resolve(false);
         }
       })
       .catch(err => {
@@ -76,6 +78,24 @@ export class UserServiceProvider {
       });
     });
 
+  }
+
+  loadUserInSession(strEmail, strPassencrypt) {
+    let strSQL = `SELECT * FROM user WHERE email=? AND password=?;`;
+    let arrValues = [strEmail, strPassencrypt];
+
+    this.sqLite.database.executeSql(strSQL, arrValues)
+    .then(result => {
+      if(result.rows.item(0)) {
+        this.sessionService.setUserSession(result.rows.item(0));
+      }
+      else {
+        this.sessionService.setUserSession(null);
+      }
+    })
+    .catch(err => {
+      console.error("No se cargo usuario en la sesión.")
+    });
   }
 
 
