@@ -19,11 +19,12 @@ export class SessionServiceProvider {
   }
 
   setUserSession(objUser: User): Promise<any> {
+    this.login();
     return this.nativeStorage.setItem('UserSession', objUser);
   }
 
   getUserSession(): Promise<any> {
-    return this.nativeStorage.getItem('myitem');
+    return this.nativeStorage.getItem('UserSession');
   }
 
   hasLoggedIn(): Promise<boolean> {
@@ -42,6 +43,7 @@ export class SessionServiceProvider {
 
   logout(): void {
     this.nativeStorage.remove(this.HAS_LOGGED_IN);
+    this.nativeStorage.remove('UserSession')
     this.events.publish('user:logout');
   };
 

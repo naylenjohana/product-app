@@ -6,7 +6,7 @@ import { UserServiceProvider } from "../../providers/user-service/user-service";
 import { SessionServiceProvider } from '../../providers/session-service/session-service';
 import { User } from "../../models/user";
 import { AlertController } from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { ProductListPage } from '../product-list/product-list';
 
 /**
  * Generated class for the RegisterUserPage page.
@@ -80,7 +80,7 @@ export class RegisterUserPage {
         text:'Aceptar',
         handler: () => {
           if(blnSuccess) {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(ProductListPage);
           }
         }
       }]

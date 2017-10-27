@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { User } from "../../models/user";
 
 /**
  * Generated class for the PerfilDetallePage page.
@@ -17,11 +18,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class PerfilDetallePage {
 
   myForm: FormGroup;
-  email: string;
+  user: User = new User;
 
   constructor(public viewCtrl: ViewController, public formBuilder: FormBuilder, public navParams: NavParams, public alertctrl: AlertController) {
     this.myForm = this.createForm();
-    this.email = this.navParams.get('email');
+    this.user = this.navParams.get('user');
 
   }
 
@@ -41,7 +42,7 @@ export class PerfilDetallePage {
   }
 
   public dismiss() {
-    let data = {};
+    let data = null;
     this.viewCtrl.dismiss(data);
   }
 
@@ -59,7 +60,11 @@ export class PerfilDetallePage {
         {
           text: 'Ok',
           handler: () => {
-            this.dismiss();
+            this.user.firstaname = this.myForm.value.surename;
+            this.user.lastname = this.myForm.value.lastname;
+            this.user.phone = this.myForm.value.phone;
+            this.user.password = this.myForm.value.password;
+            this.viewCtrl.dismiss(this.user);
           }
         }
       ]

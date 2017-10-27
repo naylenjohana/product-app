@@ -26,13 +26,15 @@ export class UserServiceProvider {
     let strSQL : string;
     let arrValues: Array<any>;
 
+    console.log(objUser);
+
     if(objUser.id <= 1) {
       strSQL = `INSERT INTO user(email, password, firstaname, lastname, phone) VALUES (?,?,?,?,?);`;
       arrValues = [objUser.email, btoa(objUser.password), objUser.firstaname, objUser.lastname, objUser.phone];
     }
     else {
-      strSQL = `UPDATE user SET email=?, password=?, firstaname=?, lastname=?, phone=? WHERE id= ?`;
-      arrValues = [objUser.email, objUser.password, objUser.firstaname, objUser.lastname, objUser.phone, objUser.id];
+      strSQL = `UPDATE user SET password=?, firstaname=?, lastname=?, phone=? WHERE id= ?`;
+      arrValues = [btoa(objUser.password), objUser.firstaname, objUser.lastname, objUser.phone, objUser.id];
     }
 
     return new Promise((resolve, reject) => {
@@ -42,6 +44,7 @@ export class UserServiceProvider {
         if(result.insertId > 0) {
           objUser.id = result.insertId;
         }
+        this.loadUserInSession(objUser.email, btoa(objUser.password));
         resolve(objUser);
       })
       .catch(err => {
@@ -95,6 +98,22 @@ export class UserServiceProvider {
     })
     .catch(err => {
       console.error("No se cargo usuario en la sesión.")
+    });
+  }
+
+  deleteUserAccount(email: string) {
+    let strSQL = `DELETE FROM user WHERE email=?;`;
+    let arrValues = [email];
+
+    return new Promise((resolve, reject) => {
+      this.sqLite.database.executeSql(strSQL, arrValues)
+      .then(result => {
+        this.sessionService.logout();
+        resolve();
+      })
+      .catch(err => {
+        reject(err);
+      });
     });
   }
 

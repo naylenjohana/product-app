@@ -22,7 +22,7 @@
         <ion-list>
             <ion-item>
                 <ion-label floating>Email</ion-label>
-                <ion-input formControlName="email" type="text"></ion-input>
+                <ion-input formControlName="email" type="email"></ion-input>
             </ion-item>
             <ion-item *ngIf="!myForm.controls.email.valid && myForm.controls.email.touched">
                 <p>
@@ -70,7 +70,7 @@
 
             <ion-item>
                 <ion-label floating>Teléfono</ion-label>
-                <ion-input formControlName="phone" type="text"></ion-input>
+                <ion-input formControlName="phone" type="number"></ion-input>
             </ion-item>
             <ion-item *ngIf="!myForm.controls.phone.valid && myForm.controls.phone.touched">
                 <p>

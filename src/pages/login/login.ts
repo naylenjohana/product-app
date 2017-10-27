@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms"
 import { RegisterUserPage } from '../register-user/register-user';
 import { ChangePassPage } from '../change-pass/change-pass';
 import { UserServiceProvider } from "../../providers/user-service/user-service";
-import { HomePage } from '../home/home';
+import { ProductListPage } from '../product-list/product-list';
 
 /**
  * Generated class for the LoginPage page.
@@ -59,7 +59,7 @@ export class LoginPage {
     this.userService.verifyAuthUser(this.myForm.value.email, this.myForm.value.password)
     .then(blnSuccess => {
       if(blnSuccess) {
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(ProductListPage);
       }
       else {
         this.presentAlert(false, 'Error', 'Usuario y/o contraseña inváido');
@@ -105,7 +105,7 @@ export class LoginPage {
         text:'Aceptar',
         handler: () => {
           if(blnSuccess) {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(ProductListPage);
           }
         }
       }]

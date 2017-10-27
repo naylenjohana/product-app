@@ -4,6 +4,8 @@ import { LoginPage } from "../login/login";
 import { PerfilDetallePage } from "../perfil-detalle/perfil-detalle";
 import { SessionServiceProvider } from "../../providers/session-service/session-service";
 import { FirebaseServiceProvider } from "../../providers/firebase-service/firebase-service";
+import { User } from "../../models/user";
+import { UserServiceProvider } from "../../providers/user-service/user-service";
 
 /**
  * Generated class for the PerfilPage page.
@@ -19,8 +21,22 @@ import { FirebaseServiceProvider } from "../../providers/firebase-service/fireba
 })
 export class PerfilPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public userData: SessionServiceProvider, public sf: FirebaseServiceProvider, public alertctrl: AlertController) {
+  userLoggedIn: User = new User();
 
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public modalCtrl: ModalController,
+    public userData: SessionServiceProvider,
+    public sf: FirebaseServiceProvider,
+    public alertctrl: AlertController,
+    public userCtrl: UserServiceProvider) {
+
+
+    this.userData.getUserSession().then((user) => {
+      console.log(user);
+      this.userLoggedIn = user;
+    })
+      .catch(err => console.error(err));
   }
 
   ionViewDidLoad() {
@@ -54,9 +70,19 @@ export class PerfilPage {
   }
 
   editPerson() {
-    let editProfile = this.modalCtrl.create(PerfilDetallePage, { email: "email@email.com" });
+    let editProfile = this.modalCtrl.create(PerfilDetallePage, { user: this.userLoggedIn });
     editProfile.onDidDismiss(data => {
-      console.log(data);
+      console.log("data " + data);
+      if (data != null) {
+        this.userCtrl.saveUser(data).then(() => {
+
+          this.userData.getUserSession().then((user) => {
+            this.userLoggedIn = user;
+          })
+            .catch(err => console.error(err));
+
+        }).catch(err => console.error(err));
+      }
     });
     editProfile.present();
 
@@ -76,7 +102,8 @@ export class PerfilPage {
         {
           text: 'Ok',
           handler: () => {
-            console.log('Agree clicked');
+            this.userCtrl.deleteUserAccount(this.userLoggedIn.email);
+            this.navCtrl.setRoot(LoginPage);
           }
         }
       ]
